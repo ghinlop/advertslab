@@ -1,7 +1,7 @@
 $(document).ready(() => {
     const urls = ['bonusadpoints', 'paidads'];
-    let BapAd = [];
-    let MoneyAd = [];
+    let BapAd = []
+    , MoneyAd = [];
     for (let url of urls) {
         if (url === 'bonusadpoints') {
             getAdBAP(url)
@@ -19,8 +19,8 @@ function getAdBAP(url) {
         type: 'GET',
         dataType: 'html'
     }).done(function (data) {
-        let DataArray = $(data).find('#pad_pageindx_c_mxinside_allads').find('a');
-        let AdArray = [];
+        let DataArray = $(data).find('#pad_pageindx_c_mxinside_allads').find('a')
+        , AdArray = [];
         if (DataArray && DataArray.length > 0) {
             for (let i = 0; i < DataArray.length; i++) {
                 let data = $(DataArray[i]).attr('href');
@@ -42,8 +42,8 @@ function getBapID(url) {
         dataType: 'html'
     }).done(function (data) {
         let dataBapAD = [];
-        let valueDataAd = new Array();
-        let temp = new Array();
+        let valueDataAd = []
+        , temp = [];
         temp = $(data)
             .find('#allpageinside_allthepage_inside_pagein_viewadsporter a')
             .attr('href').split('.php?ad=')[1];
