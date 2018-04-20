@@ -1,6 +1,6 @@
 $(document).ready(() => {
     const urls = ['bonusadpoints', 'paidads'];
-    let adContentData = {};
+    addHtml()
     for (let url of urls) {
         if (url === 'bonusadpoints') {
             var urlPOST = 'ba154267fssdcgd5pemd1'
@@ -11,8 +11,32 @@ $(document).ready(() => {
             getAds(url,'.pad_pageindx_c_mxinside_exp_allad', urlPOST)
         }
     }
-    document.location.url = 'https://advertslab.com/';
 });
+
+function addHtml(value = null){
+    if(value === null){
+        let appHtml = `
+            <div 
+                id="auto-note" 
+                style="text-align: center; 
+                background: #0088dd; 
+                position: fixed;
+                top: 0;
+                color: #fff;
+                font-weight: bold;
+                right: 10px;
+                padding: 10px 15px;
+                width: auto;
+                height: auto;
+                box-shadow: 0 0 5px rgba(0,0,0,0.5)">
+                Auto Starting...!
+            </div>
+        `
+        $('body').append(appHtml)
+    }else{
+        $('#auto-note').text(value)
+    }
+}
 
 function getAds(url, idFinder, data) {
     let AdBAPLink = [];
@@ -33,6 +57,7 @@ function getAds(url, idFinder, data) {
                 for (let url of AdBAPLink) {
                     getAdID(url, urlPOST)
                 }
+                addHtml('Auto View successed!')
             }
         }
     })
