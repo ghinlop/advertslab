@@ -1,41 +1,44 @@
 $(document).ready(() => {
     const urls = ['bonusadpoints', 'paidads'];
-    let BapAd = []
-    , MoneyAd = [];
+    let adContentData = {};
     for (let url of urls) {
         if (url === 'bonusadpoints') {
-            getAdBAP(url)
+            var urlPOST = 'ba154267fssdcgd5pemd1'
+            getAds(url,'#pad_pageindx_c_mxinside_allads', urlPOST)
         }
         if (url === 'paidads') {
-
+            var urlPOST = 'edenf254264sxvfsdcw6254'
+            getAds(url,'.pad_pageindx_c_mxinside_exp_allad', urlPOST)
         }
     }
+    document.location.url = 'https://advertslab.com/';
 });
 
-function getAdBAP(url) {
-    let AdBAPLink = []
+function getAds(url, idFinder, data) {
+    let AdBAPLink = [];
+    let urlPOST = data;
     $.ajax({
         url: `https://advertslab.com/${url}.php`,
         type: 'GET',
         dataType: 'html'
     }).done(function (data) {
-        let DataArray = $(data).find('#pad_pageindx_c_mxinside_allads').find('a')
-        , AdArray = [];
+        let DataArray = $(data).find(`${idFinder}`).find('a');
         if (DataArray && DataArray.length > 0) {
             for (let i = 0; i < DataArray.length; i++) {
                 let data = $(DataArray[i]).attr('href');
                 AdBAPLink.push(data);
             }
+            console.log(AdBAPLink)
             if (AdBAPLink.length > 0) {
                 for (let url of AdBAPLink) {
-                    getBapID(url)
+                    getAdID(url, urlPOST)
                 }
             }
         }
     })
 }
 
-function getBapID(url) {
+function getAdID(url, urlP) {
     $.ajax({
         url: `https://advertslab.com/${url}`,
         type: 'GET',
@@ -54,17 +57,18 @@ function getBapID(url) {
         })
         if (valueDataAd.length > 0) {
             for(let item of valueDataAd){
-                setTimeout(PostBAP(item.theadsid1get, item.thesourceidget), 1000); 
+                setTimeout(PostBAP(item.theadsid1get, item.thesourceidget, urlP), 1000); 
             }
         }
     })
 }
-function PostBAP(theadsid1get, thesourceidget) {
+function PostBAP(theadsid1get, thesourceidget, data) {
+    let urlPOST = data;
     var theadsid1 = theadsid1get;
     var thesourceid = parseInt(thesourceidget);
     $.ajax({
         type: 'POST',
-        url: 'inc/ba154267fssdcgd5pemd1.php',
+        url: `inc/${urlPOST}.php`,
         data: {
             theadsid1: theadsid1,
             thesourceid: thesourceid
