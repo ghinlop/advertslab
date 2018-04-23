@@ -117,13 +117,19 @@ setTimeout(function () {
                 }
                 if (dataCap !== null) {
                     clearInterval(captLoop)
-                    for (let i = 0; i < imgC.length; i++) {
-                        let imgID = $(imgC[i]).attr('id');
-                        let testString = $(imgC[i])[0].currentSrc.substr(64, 10);
-                        if (testString === dataCap[0]) {
-                            $(`#${imgID}`).parent().click();
-                            $(`input#captcha_button`).click();
-                            setTimeout(() => {
+                } else {                    
+                    setTimeout(()=>{
+                        $('.visualCaptcha-refresh-button').find('a').click();
+                    }, 5000)
+                }
+                for (let i = 0; i < imgC.length; i++) {
+                    let imgID = $(imgC[i]).attr('id');
+                    let testString = $(imgC[i])[0].currentSrc.substr(64, 10);
+                    if (testString === dataCap[0]) {
+                        $(`#${imgID}`).parent().click();
+                        $(`input#captcha_button`).click();
+                        var clickLoop = setInterval(() => {
+                            if($('input#button')){
                                 var sec = (issue.waiting + 1) * 1000;
                                 console.log(sec)
                                 setTimeout(() => {
@@ -132,13 +138,10 @@ setTimeout(function () {
                                         $('#closeBtn').click();
                                     },2000)
                                 },sec)
-                            },1000)
-                        }
+                                clearInterval(clickLoop)
+                            }
+                        },1000)
                     }
-                } else {                    
-                    setTimeout(()=>{
-                        $('.visualCaptcha-refresh-button').find('a').click();
-                    }, 5000)
                 }
             }
         }, 1000)
