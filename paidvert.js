@@ -120,8 +120,6 @@ setTimeout(function () {
                     for (let i = 0; i < imgC.length; i++) {
                         let imgID = $(imgC[i]).attr('id');
                         let testString = $(imgC[i])[0].currentSrc.substr(64, 10);
-                        console.log(`testString: ${testString}`)
-                        console.log(`dataCap: ${dataCap[0]}`)
                         if (testString === dataCap[0]) {
                             $(`#${imgID}`).parent().click();
                             $(`input#captcha_button`).click();
@@ -137,11 +135,10 @@ setTimeout(function () {
                             },1000)
                         }
                     }
-                } else {
-                    $('.visualCaptcha-refresh-button').find('a').click();
+                } else {                    
                     setTimeout(()=>{
-                        console.log('Load New CaptCha')
-                    }, 10000)
+                        $('.visualCaptcha-refresh-button').find('a').click();
+                    }, 5000)
                 }
             }
         }, 1000)

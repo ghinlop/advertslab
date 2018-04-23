@@ -1,12 +1,21 @@
-$(document).ready(function(){
-    var getAd = $('#activationAds').find('a');
-    if(getAd.length  > 0){
-        for(let i = 0; i < getAd.length; i++){
-            let aHref = getAd[i].href;
-            window.location.href = aHref;
+$(document).ready(function () {
+    var getPaidAd = $('#paidAds').find('a');
+    if (getPaidAd.length > 0) {
+        var getPaidAdID = $(getPaidAd[0]).attr('id');
+        var getBtnType = getPaidAdID.substr(0, 5);
+        console.log(getBtnType)
+        if (getBtnType === 'view-') {
+            console.log(getPaidAdID)
+            $(`#${getPaidAdID}`)[0].click()
         }
-    }else{
-        alert('No Ad Need View')
+    } else {
+        var getAd = $('#activationAds').find('a');
+        if (getAd.length > 0) {
+            for (let i = 0; i < getAd.length; i++) {
+                let aHref = getAd[i].href;
+                window.location.href = aHref;
+            }
+        }
     }
     $('#copy-1').click();
     $('#copy-2').click();
