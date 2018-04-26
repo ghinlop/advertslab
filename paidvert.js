@@ -97,7 +97,7 @@ const capCode = [
     ],
     [
         "XHeAAAGIkl", "Anchor"
-    ],
+    ]
 ]
 
 setTimeout(function () {
@@ -111,39 +111,42 @@ setTimeout(function () {
                 var dataCap = null;
                 for (let i = 0; i < capCode.length; i++) {
                     let data = capCode[i].indexOf(txtC);
-                    if(data === 1){
+                    if (data === 1) {
                         dataCap = capCode[i];
                     }
                 }
                 if (dataCap !== null) {
-                    clearInterval(captLoop)
-                } else {                    
-                    setTimeout(()=>{
-                        $('.visualCaptcha-refresh-button').find('a').click();
-                    }, 5000)
-                }
-                for (let i = 0; i < imgC.length; i++) {
-                    let imgID = $(imgC[i]).attr('id');
-                    let testString = $(imgC[i])[0].currentSrc.substr(64, 10);
-                    if (testString === dataCap[0]) {
-                        $(`#${imgID}`).parent().click();
-                        $(`input#captcha_button`).click();
-                        var clickLoop = setInterval(() => {
-                            if($('input#button')){
-                                var sec = (issue.waiting + 1) * 1000;
-                                console.log(sec)
+                    for (let i = 0; i < imgC.length; i++) {
+                        var imgID = $(imgC[i]).attr('id');
+                        var testString = $(imgC[i])[0].currentSrc.substr(64, 10);
+                        console.log(txtC)
+                        console.log(testString)
+
+                        if (testString === dataCap[0]) {
+                            $(`#${imgID}`).parent().click();
+                            $(`input#captcha_button`).click();
+                            var clickLoop = setInterval(() => {
+                                if ($('input#button')) {
+                                    clearInterval(clickLoop)
+                                }
+                            }, 1000)
+                            var sec = (issue.waiting + 1) * 1000;
+                            setTimeout(() => {
+                                $(`input#button`).click();
                                 setTimeout(() => {
-                                    $(`input#button`).click();
-                                    setTimeout(()=>{
-                                        $('#closeBtn').click();
-                                    },2000)
-                                },sec)
-                                clearInterval(clickLoop)
-                            }
-                        },1000)
+                                    $('#closeBtn').click();
+                                }, 2000)
+                            }, sec)
+                        }
                     }
+                    clearInterval(captLoop)
+                } else {
+                    setTimeout(() => {
+                        $('.visualCaptcha-refresh-button').find('a').click();
+                    }, 1000)
                 }
             }
-        }, 1000)
+        }, 6000);
+        
     }
-}, 3000)
+}, 2000)

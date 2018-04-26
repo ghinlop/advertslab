@@ -22,8 +22,13 @@ $(document).ready(function () {
     $('#copy-3').click();
     $('#view_ad').click();
     var getSec = $('.alert.alert-info.no-margin-bottom')[0].innerText;
-    var sec = (parseInt(getSec.match(/\d+/)[0]) + 60) * 1000;
+    var sec = (parseInt(getSec.match(/\d+/)[0]) + 60);
     setTimeout(() => {
         $('#new_ad').click();
-    }, sec);
+        for (let i = 60; i > 0; i--){
+            var titleLoop = setTimeout((i)=> {
+                $('title').text(`Time: ${i}s`)
+            },1000)
+        }
+    }, sec * 1000);
 })
