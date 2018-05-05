@@ -1,6 +1,9 @@
 $(document).ready(function () {
+	document.charset = 'UTF-8'
 	var urlCurrent = document.location.href;
-	console.log(urlCurrent)
+	var getBalance = $('.balancelist');
+	var balance = $(getBalance[1]).text().split(' ')[0]
+	if(balance > 5) console.log(balance);
 	if (/surfing/.test(urlCurrent)) {
 		getNewLinkAd().then(data => {
 			if(data){
@@ -9,7 +12,6 @@ $(document).ready(function () {
 		}).catch(err => {
 			let time = 0;
 			let timeLoadTitle = setInterval(()=>{
-				console.log(time)
 				$('title').text(`${time} giây`);
 				time++;
 				if(time === err){
