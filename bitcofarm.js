@@ -4,46 +4,55 @@ let congtac = false;
 
 $('style').remove()
 $('head script').remove()
-$('img').remove()
 $(document).ready(()=>{
     if (_url[3] === 'ads') {
         let _ad = $('.adspage a');
         let _arr = new Array();
-        if (_ad.length > 0) {
-            for (let i = 0; i < _ad.length; i++) {
-                let classLeng = $(_ad[i]).find('.hap').attr('class');
-                _log(classLeng)
-                if (classLeng !== undefined) {
-                    if(classLeng.split(/\s/).length < 3){
-                        _arr.push($(_ad[i]).attr('href'))
+        setTimeout(function(){
+            if (_ad.length > 0) {
+                for (let i = _ad.length - 1; i >= 0 ; i--) {
+                    let classLeng = $(_ad[i]).find('.hap').attr('class');
+                    if (classLeng !== undefined) {
+                        let _classList = classLeng.split(/\s/);
+                        // _log(_classList[_classList.length - 1])
+                        if(_classList[_classList.length - 1] !== "disabled_pbx"){
+                            _arr.push($(_ad[i]).attr('href'))
+                        }
                     }
+                    // _log(_arr)
                 }
             }
-            _log(_arr)
-        }else{
-    
-            $('body').html(`
-            <h1 id="status_reload" style="background-color: #fff; color: #0088dd; text-align: center; margin-bottom: 0"></h1>
-            `)
-            let i = 60;
-            let _timeout = setInterval(function(){
-               if(i > 0){
-                $('#status_reload').html(`Còn: ${i} giây sẽ Reload`)
-                i--
-               }else{
-                   location.reload();
-                   clearInterval(_timeout)
-               }
-            },1000)
-        }
-        if (_arr.length > 0) {
-            location.href = `http://bitcofarm.com/${_arr[0]}`
-        }
+            if(_arr.length === 0){
+                $('body').html(`
+                    <h1 id="status_reload" style="background-color: #fff; color: #0088dd; text-align: center; margin-bottom: 0"></h1>
+                `)
+                let i = 60;
+                let _timeout = setInterval(function(){
+                   if(i > 0){
+                    $('#status_reload').html(`Còn: ${i} giây sẽ Reload`)
+                    i--
+                   }else{
+                       location.reload();
+                       clearInterval(_timeout)
+                   }
+                },1000)
+            }
+            if (_arr.length > 0) {
+                location.href = `http://bitcofarm.com/${_arr[0]}`
+            }
+        }, 1000)
     }
     if (_url[3] === 'modules') {
+        $('body').html(`
+        <div id="headadx" style="height: 10px; color: #000!important;">
+            <div id="desc"style="color: #000!important;"></div>
+            <div id="bar" style="background-color: #000; padding: 30px 0;">
+                <div id="barload"></div>
+            </div>
+        </div>
+        `)
         let _arr = new Array();
         let _id = _url[4].split(/\?ad\=/)[1].split(/\&mask\=/)[0]
-        $('iframe').remove()
         let loopgetAdd = setInterval(function () {
             if (view >= settimeout) {
                 let result = $.ajax({
