@@ -6,8 +6,13 @@ $('style').remove()
 $('head script').remove()
 $(document).ready(()=>{
     if (_url[3] === 'ads') {
+        let _getdisAd = $('body').html().split(`').addClass('disabled_pbx')`);
         let _ad = $('.adspage a');
         let _arr = new Array();
+        
+        for(let i = 0; i < _getdisAd.length; i++){
+            $(`${_getdisAd[i].split(`$('`)[1]}`).parent().remove()
+        }
         setTimeout(function(){
             if (_ad.length > 0) {
                 for (let i = _ad.length - 1; i >= 0 ; i--) {
@@ -53,27 +58,35 @@ $(document).ready(()=>{
         `)
         let _arr = new Array();
         let _id = _url[4].split(/\?ad\=/)[1].split(/\&mask\=/)[0]
-        let loopgetAdd = setInterval(function () {
-            if (view >= settimeout) {
-                let result = $.ajax({
-                    type: "GET",
-                    url: `http://bitcofarm.com/modules/virtual_core.php?adv=${_id}&action=adv`,
-                    async: false
-                }).responseText;
-                _log(result)
-                $('#desc').html(result)
-                if (result === "Completed!" || result === "Already Clicked!") {
-                    document.location.href = 'http://bitcofarm.com/ads'
+        let result = $.ajax({
+            type: "GET",
+            url: `http://bitcofarm.com/modules/virtual_core.php?adv=${_id}&action=adv`,
+            async: false
+        }).responseText;
+        if(result !== "Already Clicked!"){
+            let loopgetAdd = setInterval(function () {
+                if (view >= settimeout) {
+                    let result = $.ajax({
+                        type: "GET",
+                        url: `http://bitcofarm.com/modules/virtual_core.php?adv=${_id}&action=adv`,
+                        async: false
+                    }).responseText;
+                    $('#desc').html(result)
+                    if (result === "Completed!" || result === "Already Clicked!") {
+                        document.location.href = 'http://bitcofarm.com/ads'
+                    }
+                } else {
+                    view = view + 1000;
+                    var width = (view * 100) / settimeout;
+                    $('#barload').animate({
+                        width: width + '%'
+                    });
+                    $('#desc').html(width + "%")
                 }
-            } else {
-                view = view + 1000;
-                var width = (view * 100) / settimeout;
-                $('#barload').animate({
-                    width: width + '%'
-                });
-                $('#desc').html(width + "%")
-            }
-        }, 1000)
+            }, 1000)
+        }else{
+            document.location.href = 'http://bitcofarm.com/ads'
+        }
     }
 })
 
