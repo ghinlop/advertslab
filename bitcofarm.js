@@ -1,18 +1,27 @@
-// $('head').append(`<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.10/lodash.min.js"></script>`)
 const _url = document.location.href.split(/\//);
-let congtac = false;
 
 $('style').remove()
+
+let _getdisAd = $('body').html().split(`').addClass('disabled_pbx')`);
+
+let _disad = $('.disabled_pbx')
+        
+if( _disad.length > 0){
+    for(let i = 0; i < _getdisAd.length; i++){
+        $(`${_getdisAd[i].split(`$('`)[1]}`).parent().remove()
+    }
+}
+if(_getdisAd.length > 0){
+    for(let i = 0; i < _disad.length; i++){
+        $(_disad).parent().remove()
+    }
+}
 $('head script').remove()
+
 $(document).ready(()=>{
     if (_url[3] === 'ads') {
-        let _getdisAd = $('body').html().split(`').addClass('disabled_pbx')`);
         let _ad = $('.adspage a');
         let _arr = new Array();
-        
-        for(let i = 0; i < _getdisAd.length; i++){
-            $(`${_getdisAd[i].split(`$('`)[1]}`).parent().remove()
-        }
         setTimeout(function(){
             if (_ad.length > 0) {
                 for (let i = _ad.length - 1; i >= 0 ; i--) {
@@ -45,7 +54,7 @@ $(document).ready(()=>{
             if (_arr.length > 0) {
                 location.href = `http://bitcofarm.com/${_arr[0]}`
             }
-        }, 1000)
+        }, 2000)
     }
     if (_url[3] === 'modules') {
         $('body').html(`
